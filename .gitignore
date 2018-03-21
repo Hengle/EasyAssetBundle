@@ -31,4 +31,7 @@ sysinfo.txt
 
 # Builds
 *.apk
-*.unitypackage
+
+#Ignore Asset
+/Assets/Plugins/EasyAssetBundleTool/Editor/Data*
+/Assets/Plugins/UniRx*
