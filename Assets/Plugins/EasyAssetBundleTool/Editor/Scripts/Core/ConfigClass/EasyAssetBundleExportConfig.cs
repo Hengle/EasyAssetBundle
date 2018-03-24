@@ -38,6 +38,14 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
             ExportType            = copy.ExportType;
         }
 
+        internal bool IsConfigAvailable {
+            get {
+                var phase1 = !string.IsNullOrEmpty( AssetBundleCachePath );
+                var phase2 = !string.IsNullOrEmpty( ExportAssetBundlePath );
+                return phase1 && phase2;
+            }
+        }
+
         #region drawer
         //=======================================================
         // Drawer
@@ -117,14 +125,6 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
         //=======================================================
         // Utility
         //=======================================================
-
-        internal bool IsConfigAvailable {
-            get {
-                var phase1 = !string.IsNullOrEmpty( AssetBundleCachePath );
-                var phase2 = !string.IsNullOrEmpty( ExportAssetBundlePath );
-                return phase1 && phase2;
-            }
-        }
 
         private void CheckConfig() {
             var message = "";

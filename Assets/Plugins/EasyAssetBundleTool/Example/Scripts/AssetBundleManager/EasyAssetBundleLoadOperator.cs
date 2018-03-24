@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UniRx;
@@ -11,11 +12,13 @@ namespace charcolle.EasyAssetBundle.Sample {
         private string CachePath;
         private string AssetBundleName;
         private int RetryMax;
+        private bool IsDebug;
 
-        public EasyAssetBundleLoadOperator( string url, string cachePath, int retry = 3 ) {
+        public EasyAssetBundleLoadOperator( string url, string cachePath, int retry = 3, bool isDebug = false ) {
             Url       = url;
             CachePath = cachePath;
             RetryMax  = retry;
+            IsDebug   = isDebug;
         }
 
         public async Task DownLoadAssetBundle( string assetBundleName ) {
@@ -29,29 +32,40 @@ namespace charcolle.EasyAssetBundle.Sample {
 
         public async Task<AssetBundle> LoadAssetBundleFromCache( string assetBundleName ) {
             var path = CachePath + assetBundleName;
-
-            var req = AssetBundle.LoadFromFileAsync( path );
-            await req;
-            return req.assetBundle;
+            try {
+                var req = AssetBundle.LoadFromFileAsync( path );
+                await req;
+                return req.assetBundle;
+            } catch( Exception ex ) {
+                if( IsDebug ) Debug.LogError( ex );
+                return null;
+            }
         }
 
-        private int retryNum;
+        private int retryNum = 0;
         private async Task<bool> DownloadAssetBundle( string name ) {
-            var request = UnityWebRequest.GetAssetBundle( Url );
-            await request.SendWebRequest();
+            if( string.IsNullOrEmpty( Url ) )
+                return false;
+            try {
+                var request = UnityWebRequest.GetAssetBundle( Url );
+                await request.SendWebRequest();
 
-            if( !string.IsNullOrEmpty( request.error ) ) {
-                if( EasyAssetBundleFileUtility.WriteAllBytes( CachePath + name, request.downloadHandler.data ) ) {
-                    return true;
+                if( !string.IsNullOrEmpty( request.error ) ) {
+                    if( EasyAssetBundleFileUtility.WriteAllBytes( CachePath + name, request.downloadHandler.data ) ) {
+                        return true;
+                    } else {
+                        retryNum = RetryMax;
+                        return false;
+                    }
                 } else {
-                    retryNum = RetryMax;
-                    return false;
+                    Debug.LogError( request.error );
                 }
-            } else {
-                Debug.LogError( request.error );
+                request.Dispose();
+                return false;
+            } catch( Exception ex ) {
+                if( IsDebug ) Debug.LogError( ex );
+                return false;
             }
-            request.Dispose();
-            return false;
         }
 
     }

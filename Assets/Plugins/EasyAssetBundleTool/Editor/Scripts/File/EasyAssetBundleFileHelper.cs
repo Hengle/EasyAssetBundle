@@ -139,6 +139,12 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
             }
         }
 
+        internal static void DeleteBuilderData( EasyAssetBundleBuilderData data ) {
+            var path = AssetDatabase.GetAssetPath( data );
+            AssetDatabase.DeleteAsset( path );
+            AssetDatabase.Refresh();
+        }
+
         //=======================================================
         // utility
         //=======================================================

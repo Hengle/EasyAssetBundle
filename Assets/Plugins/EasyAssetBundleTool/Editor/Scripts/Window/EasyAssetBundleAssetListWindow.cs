@@ -176,6 +176,11 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
             {
                 EditorGUILayout.BeginHorizontal( EditorStyles.toolbar, GUILayout.ExpandWidth( true ) );
                 {
+                    if( GUILayout.Button( "Check Selection", EditorStyles.toolbarButton, GUILayout.Width( 90 ) ) ) {
+                        UndoHelper.BuilderDataUndo( "Check Selection" );
+                        for( int i = 0; i < treeView.state.selectedIDs.Count; i++ )
+                            data.VersionAssets[ treeView.state.selectedIDs[ i ] ].IsBuild = true;
+                    }
                     if( GUILayout.Button( "UnCheck All", EditorStyles.toolbarButton, GUILayout.Width( 75 ) ) ) {
                         UndoHelper.BuilderDataUndo( "Uncheck all AssetList" );
                         for( int i = 0; i < data.VersionAssets.Count; i++ )

@@ -64,6 +64,7 @@ public abstract class EasyAssetBundleBuilderData : ScriptableObject, IAssetBundl
             assetDic.TryGetValue( asset.Name, out idx );
             if( idx != -1 ) {
                 BuildAssets[ idx ].OldAssetVersion = asset.Version;
+                BuildAssets[ idx ].OldUnityVersion    = asset.UnityVersion;
             }
         }
     }
@@ -113,10 +114,20 @@ public abstract class EasyAssetBundleBuilderData : ScriptableObject, IAssetBundl
                     asset.Value[ i ].Date = date;
                 }
             } else {
+                // add new asset
+                if( asset.Value.Count != list.Count ) {
+                    for( int i = 0; i < asset.Value.Count; i++ ) {
+                        if( asset.Value[ i ].OldAssetVersion == 0 ) {
+                            asset.Value[ i ].Version = 0;
+                            list.Add( asset.Value[ i ] );
+                        }
+                    }
+                }
+
                 for( int i = 0; i < list.Count; i++ ) {
-                    list[ i ].Version = list[ 0 ].Version + 1;
+                    list[ i ].Version = list[ i ].Version + 1;
                     list[ i ].Date    = date;
-                    Debug.Log( "update : " + list[ i ].Name );
+                    Debug.Log( "update : " + list[ i ].Version );
                 }
             }
         }

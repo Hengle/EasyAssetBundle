@@ -103,7 +103,6 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                                 UndoHelper.BuilderDataUndo( "Change ConvertFileExtension" );
                                 GUILayout.Label( new GUIContent( "ConvertFile Extension", "Default extension of convert file." ) );
                                 AssetBundleListConvertExtension = EditorGUILayout.TextField( AssetBundleListConvertExtension );
-
                             }
                         }
 
@@ -125,7 +124,14 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
         //=======================================================
 
         private void CheckConfig() {
-            Debug.Log( "Configのチェック" );
+            if( !UseAssetBundleList )
+                return;
+            var message = "";
+            if( string.IsNullOrEmpty( AssetBundleListTextPath ) )
+                message += "You must set up AssetBundleListTextPath.\n";
+
+            if( !string.IsNullOrEmpty( message ) )
+                EditorUtility.DisplayDialog( "Export Config Error", message, "ok" );
         }
 
         #endregion

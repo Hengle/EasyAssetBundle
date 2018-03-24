@@ -12,51 +12,51 @@ MonoBehaviour:
   m_Name: SampleResourceList
   m_EditorClassIdentifier: 
   Info:
-  - Name: Asset
-    Path: Assets/AssetBundleTest/Asset
+  - Name: prefab
+    Path: Assets/AssetBundleTest/Asset/prefab
     Extension: 
-    AssetBundleName: asset
+    AssetBundleName: prefab
     IsAssetBundle: 1
-    Version: 1
+    Version: 3
     IsExist: 0
     LocalPath: 
   - Name: Cube
     Path: Assets/AssetBundleTest/Asset/prefab/Cube.prefab
     Extension: .prefab
-    AssetBundleName: asset
+    AssetBundleName: prefab
     IsAssetBundle: 0
-    Version: 1
+    Version: 3
+    IsExist: 0
+    LocalPath: 
+  - Name: materialtest
+    Path: Assets/AssetBundleTest/Asset/prefab/materialtest.mat
+    Extension: .mat
+    AssetBundleName: prefab
+    IsAssetBundle: 0
+    Version: 3
     IsExist: 0
     LocalPath: 
   - Name: poyon_HighPolyModel_ver3
     Path: Assets/AssetBundleTest/Asset/prefab/poyon_HighPolyModel_ver3.fbx
     Extension: .fbx
-    AssetBundleName: asset
+    AssetBundleName: prefab
     IsAssetBundle: 0
-    Version: 1
+    Version: 3
     IsExist: 0
     LocalPath: 
-  - Name: a
-    Path: Assets/AssetBundleTest/Asset/sound/a.mp3
-    Extension: .mp3
-    AssetBundleName: asset
+  - Name: scene1
+    Path: Assets/AssetBundleTest/Asset/scene/scene1.unity
+    Extension: .unity
+    AssetBundleName: scene1
     IsAssetBundle: 0
-    Version: 1
+    Version: 2
     IsExist: 0
     LocalPath: 
-  - Name: ok
-    Path: Assets/AssetBundleTest/Asset/sound/test/ok.prefab
-    Extension: .prefab
-    AssetBundleName: asset
+  - Name: scene2
+    Path: Assets/AssetBundleTest/Asset/scene/scene2.unity
+    Extension: .unity
+    AssetBundleName: scene2
     IsAssetBundle: 0
-    Version: 1
-    IsExist: 0
-    LocalPath: 
-  - Name: yea
-    Path: Assets/AssetBundleTest/Asset/sound/test/yea.spriteatlas
-    Extension: .spriteatlas
-    AssetBundleName: asset
-    IsAssetBundle: 0
-    Version: 1
+    Version: 2
     IsExist: 0
     LocalPath: 

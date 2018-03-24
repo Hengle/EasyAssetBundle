@@ -7,7 +7,7 @@ using UnityEditor;
 using BuildTargetUtility = charcolle.Utility.EasyAssetBundle.v1.BuildTargetUtility;
 using GUIHelper          = charcolle.Utility.EasyAssetBundle.v1.GUIHelper;
 using FileHelper         = charcolle.Utility.EasyAssetBundle.v1.FileHelper;
-using UndoHelper = charcolle.Utility.EasyAssetBundle.v1.UndoHelper;
+using UndoHelper         = charcolle.Utility.EasyAssetBundle.v1.UndoHelper;
 
 /// <summary>
 /// http://lv100hp9999.com/wp1/2016/07/06/unity%E8%A4%87%E6%95%B0%E9%81%B8%E6%8A%9E%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88%E3%81%AEeditor%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%AE%E3%82%B5%E3%83%B3/
@@ -63,16 +63,18 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
             AssetBundleListConfig.Initialize();
         }
 
+        public bool IsConfigAvailable {
+            get {
+                var phase1 = !string.IsNullOrEmpty( AssetBundleBuildRootPath ) && ExportConfig.IsConfigAvailable;
+                var phase2 = !AssetBundleListConfig.UseAssetBundleList ? true : AssetBundleListConfig.IsConfigAvailable;
+                return phase1 && phase2;
+            }
+        }
+
         #region interface
         //=======================================================
         // interface
         //=======================================================
-
-        public bool IsConfigAvailable {
-            get {
-                return !string.IsNullOrEmpty( AssetBundleBuildRootPath ) && ExportConfig.IsConfigAvailable;
-            }
-        }
 
         public bool IsUseAssetBundleList {
             get {
@@ -133,7 +135,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
 
             GUILayout.Space( 5 );
 
-            var rect = EditorGUILayout.BeginVertical( EditorStyles.helpBox );
+            EditorGUILayout.BeginVertical( EditorStyles.helpBox );
             {
                 GUILayout.Space( 3 );
 
@@ -193,13 +195,8 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
             AssetBundleListConfig.OnGUI();
             UploadConfig.OnGUI();
 
-            if( IsContextClick( Event.current, rect ) ) {
-                var menu = new GenericMenu();
-                menu.AddItem( new GUIContent( "Clear Basic Settings" ), false, () => {
-                    AssetBundleBuildRootPath = "";
-                } );
-                menu.ShowAsContext();
-            }
+            GUILayout.FlexibleSpace();
+
         }
 
         //=======================================================
@@ -207,19 +204,16 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
         //=======================================================
 
         internal void CheckConfig() {
+            var message = "";
+            if( string.IsNullOrEmpty( AssetBundleBuildRootPath ) )
+                message += "You must set up AssetBundleBuildRootPath.\n";
+            if( !ExportConfig.IsConfigAvailable )
+                message += "You must set up ExportConfig.\n";
+            if( AssetBundleListConfig.UseAssetBundleList && !AssetBundleListConfig.IsConfigAvailable )
+                message += "You must set up AssetBundleListConfig.\n";
 
-        }
-
-        internal bool IsContextClick( Event e, Rect rect ) {
-            switch( e.type ) {
-                case EventType.ContextClick:
-                    if( rect.Contains( e.mousePosition ) ) {
-                        e.Use();
-                        return true;
-                    }
-                    break;
-            }
-            return false;
+            if( !string.IsNullOrEmpty( message ) )
+                EditorUtility.DisplayDialog( "Build Config Error", message, "ok" );
         }
 
         #endregion

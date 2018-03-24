@@ -284,7 +284,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     GUILayout.Label( label );
                     EditorGUILayout.BeginHorizontal();
                     {
-                        EditorGUILayout.TextField( path );
+                        path = EditorGUILayout.TextField( path );
                         var p = FileHelper.GetDraggedObject( Event.current, GUILayoutUtility.GetLastRect() );
                         if( !string.IsNullOrEmpty( p ) ) {
                             EditorGUIUtility.keyboardControl = 0;
@@ -314,7 +314,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     GUILayout.Label( label );
                     EditorGUILayout.BeginHorizontal();
                     {
-                        EditorGUILayout.TextField( path );
+                        path = EditorGUILayout.TextField( path );
                         var p = FileHelper.GetDraggedObject( Event.current, GUILayoutUtility.GetLastRect() );
                         if( !string.IsNullOrEmpty( p ) ) {
                             EditorGUIUtility.keyboardControl = 0;

@@ -117,6 +117,17 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     switch( selectedBuilderMenuIdx ) {
                         case 0:
                             BuilderMenu();
+                            if( IsContextClick( Event.current, GUILayoutUtility.GetLastRect() ) ) {
+                                var menu = new GenericMenu();
+                                menu.AddItem( new GUIContent( "Delete BuilderData" ), false, () => {
+                                    if( EditorUtility.DisplayDialog( "EasyAssetBundle", "You cannot undo this process.", "ok", "cancel" ) ) {
+                                        selectedBuilderDataIdx = 0;
+                                        FileHelper.DeleteBuilderData( SelectedData );
+                                        Initialize();
+                                    }
+                                } );
+                                menu.ShowAsContext();
+                            }
                             break;
                         case 1:
                             LabelConfig();
@@ -204,8 +215,6 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
         }
 
         private void FooterLeft() {
-            GUILayout.FlexibleSpace();
-
             EditorGUILayout.BeginHorizontal();
             {
                 GUI.backgroundColor = Color.cyan;
@@ -270,11 +279,11 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                                     SelectedData.BuildAssets[ i ].IsBuild = SelectedData.BuildAssets[ i ].IsAsset;
                                 break;
                             case 3:
-                                UndoHelper.BuilderDataUndo( "Select DirrefentUnityVersion" );
+                                UndoHelper.BuilderDataUndo( "Select DifferentUnityVersion" );
                                 if( !IsUseAssetBundleList )
                                     return;
                                 for( int i = 0; i < SelectedData.BuildAssets.Count; i++ )
-                                    SelectedData.BuildAssets[ i ].IsBuild = !SelectedData.BuildAssets[ i ].UnityVersion.Equals( Application.unityVersion );
+                                    SelectedData.BuildAssets[ i ].IsBuild = !SelectedData.BuildAssets[ i ].OldUnityVersion.Equals( Application.unityVersion );
                                 break;
                         }
                     }
@@ -288,6 +297,11 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
 
                     EditorGUILayout.BeginHorizontal( EditorStyles.toolbar );
                     {
+                        if( GUILayout.Button( "Check Selection", EditorStyles.toolbarButton, GUILayout.Width( 90 ) ) ) {
+                            UndoHelper.BuilderDataUndo( "Check Selection" );
+                            for( int i = 0; i < treeView.state.selectedIDs.Count; i++ )
+                                SelectedData.BuildAssets[ treeView.state.selectedIDs[i] ].IsBuild = true;
+                        }
                         if( GUILayout.Button( "Disable All", EditorStyles.toolbarButton, GUILayout.Width( 70 ) ) ) {
                             UndoHelper.BuilderDataUndo( "Disable all" );
                             for( int i = 0; i < SelectedData.BuildAssets.Count; i++ )
@@ -379,6 +393,18 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
 
         private Rect multiColumnTreeViewRect {
             get { return new Rect( 0, 30, position.width - 40, position.height - 60 ); }
+        }
+
+        private bool IsContextClick( Event e, Rect rect ) {
+            switch( e.type ) {
+                case EventType.ContextClick:
+                    if( rect.Contains( e.mousePosition ) ) {
+                        e.Use();
+                        return true;
+                    }
+                    break;
+            }
+            return false;
         }
 
         #endregion

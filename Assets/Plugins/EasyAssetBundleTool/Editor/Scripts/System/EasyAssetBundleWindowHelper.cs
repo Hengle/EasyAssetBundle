@@ -16,7 +16,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
 
         internal readonly static string[] MENU_BUILDERMENU      = new string[] { "Process Settings", "Label Setting" };
         internal readonly static string[] MENU_BUILDERASSETMENU = new string[] { "Menu", "", "Select Files", "Select DifferentUnityVersion" };
-        internal readonly static string[] MENU_ASSETLISTMENU    = new string[] { "Menu", "", "Delete Selection", "Delete Invalid", "Set Version 1", "Check Duplicate" };
+        internal readonly static string[] MENU_ASSETLISTMENU    = new string[] { "Menu", "", "Delete Checked", "Delete Invalid", "Set Version 1", "Check Duplicate" };
 
         internal static List<EasyAssetBundleBuilderData> Data = new List<EasyAssetBundleBuilderData>();
 

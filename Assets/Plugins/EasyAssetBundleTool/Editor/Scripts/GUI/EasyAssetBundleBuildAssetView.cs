@@ -208,7 +208,11 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     break;
                 case Columns.UnityVersion: {
                         EditorGUI.BeginDisabledGroup( !item.data.IsBuild );
-                        DefaultGUI.Label( cellRect, item.data.UnityVersion, args.selected, args.focused );
+                        if( Config.IsUseAssetBundleList ) {
+                            DefaultGUI.Label( cellRect, item.data.OldUnityVersion, args.selected, args.focused );
+                        } else {
+                            DefaultGUI.Label( cellRect, item.data.UnityVersion, args.selected, args.focused );
+                        }
                         EditorGUI.EndDisabledGroup();
                     }
                     break;
@@ -253,7 +257,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
             {
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent(EditorGUIUtility.FindTexture("FilterByType"), "AssetType"),
+                    headerContent = new GUIContent(EditorGUIUtility.FindTexture( "FilterByType" ), "Type of the asset."),
                     contextMenuText = "",
                     headerTextAlignment = TextAlignment.Center,
                     canSort = false,
@@ -266,7 +270,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent(EditorGUIUtility.FindTexture("Checkmark"), "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "),
+                    headerContent = new GUIContent(EditorGUIUtility.FindTexture( "Checkmark") , "Check if the filename is available."),
                     contextMenuText = "",
                     headerTextAlignment = TextAlignment.Left,
                     canSort = false,
@@ -278,7 +282,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("FileName"),
+                    headerContent = new GUIContent( "FileName" ),
                     headerTextAlignment = TextAlignment.Left,
                     canSort = false,
                     width = 160,
@@ -288,7 +292,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("Extension", "In sed porta ante. Nunc et nulla mi."),
+                    headerContent = new GUIContent( "Extension" ),
                     headerTextAlignment = TextAlignment.Left,
                     canSort = false,
                     width = 70,
@@ -298,7 +302,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("AssetBundle", "Maecenas congue non tortor eget vulputate."),
+                    headerContent = new GUIContent("AssetBundle", "" ),
                     headerTextAlignment = TextAlignment.Left,
                     canSort = false,
                     width = 70,
@@ -307,7 +311,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     allowToggleVisibility = true
                 },
                 new MultiColumnHeaderState.Column {
-                    headerContent = new GUIContent( "AssetPath", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus." ),
+                    headerContent = new GUIContent( "AssetPath" ),
                     headerTextAlignment = TextAlignment.Left,
                     canSort = false,
                     width = 90,
@@ -315,7 +319,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     autoResize = true
                 },
                 new MultiColumnHeaderState.Column {
-                    headerContent = new GUIContent( "Guid", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus." ),
+                    headerContent = new GUIContent( "Guid" ),
                     headerTextAlignment = TextAlignment.Left,
                     canSort = false,
                     width = 90,
@@ -325,7 +329,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
             };
             if( useVersion ) {
                 columns.Add( new MultiColumnHeaderState.Column {
-                    headerContent = new GUIContent( "Version", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus." ),
+                    headerContent = new GUIContent( "Version" ),
                     headerTextAlignment = TextAlignment.Left,
                     canSort = false,
                     width = 55,
@@ -334,7 +338,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     autoResize = true
                 } );
                 columns.Add( new MultiColumnHeaderState.Column {
-                    headerContent = new GUIContent( "UnityVersion", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus." ),
+                    headerContent = new GUIContent( "UnityVersion", "" ),
                     headerTextAlignment = TextAlignment.Left,
                     canSort = false,
                     width = 70,

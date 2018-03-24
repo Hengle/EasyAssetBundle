@@ -9,7 +9,7 @@ namespace charcolle.EasyAssetBundle.Sample {
             try {
                 File.WriteAllBytes( path, bytes );
                 return true;
-            } catch( Exception ex ) {
+            } catch {
                 return false;
             }
         }
@@ -19,7 +19,7 @@ namespace charcolle.EasyAssetBundle.Sample {
                 File.WriteAllText( path, text );
                 return true;
             }
-            catch( Exception ex ) {
+            catch {
                 return false;
             }
         }

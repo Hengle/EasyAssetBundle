@@ -31,14 +31,14 @@ public class SampleAssetBundleInfoData : ScriptableObject, ISerializationCallbac
         for( int i = 0; i < Info.Count; i++ ) {
             Info[ i ].LocalPath = cachePath + Info[ i ].Name;
             Info[ i ].IsExist = File.Exists( Info[i].LocalPath );
-            Debug.Log( Info[i].LocalPath );
+            Debug.Log( Info[ i ].LocalPath + " " + Info[i].IsExist );
         }
     }
 
     public SampleAssetInfo GetAssetInfo( string name ) {
         SampleAssetInfo info;
         Resource.TryGetValue( name, out info );
-        if( string.IsNullOrEmpty( info.Name ) )
+        if( info == null )
             Debug.LogError( "This file is not registered. : " + name );
         return info;
     }

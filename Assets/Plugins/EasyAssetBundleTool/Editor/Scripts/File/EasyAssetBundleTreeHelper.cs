@@ -119,29 +119,29 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
 
         private static List<EditorAssetInfo> buildTreeViewItemRecursive( DirectoryInfo dirInfo, EditorAssetInfo parent, int depth ) {
             var items = new List<EditorAssetInfo>();
-            var myRoot = getTreeViewItem( FileHelper.SystemPathToAssetPath( dirInfo.FullName ), depth );
-            myRoot.Initialize( FileHelper.SystemPathToAssetPath( dirInfo.FullName ) );
+            var item = getTreeViewItem( FileHelper.SystemPathToAssetPath( dirInfo.FullName ), depth );
+            item.Initialize( FileHelper.SystemPathToAssetPath( dirInfo.FullName ) );
             if( depth != -1 )
-                items.Add( myRoot );
+                items.Add( item );
 
             var fileInfos = dirInfo.GetFiles( "*.*" ).ToList();
             fileInfos.RemoveAll( f => Path.GetExtension( f.Name ).Equals( ".meta" ) );
             for( int i = 0; i < fileInfos.Count; i++ ) {
                 var assetPath = FileHelper.SystemPathToAssetPath( fileInfos[ i ].FullName );
-                var item = getTreeViewItem( assetPath, depth + 1 );
-                item.Initialize( assetPath );
-                items.Add( item );
+                var child = getTreeViewItem( assetPath, depth + 1 );
+                child.Initialize( assetPath );
+                items.Add( child );
             }
             //myRoot.children = items;
 
             foreach( DirectoryInfo di in dirInfo.GetDirectories() )
-                items.AddRange( buildTreeViewItemRecursive( di, myRoot, depth + 1 ) );
+                items.AddRange( buildTreeViewItemRecursive( di, item, depth + 1 ) );
 
             return items;
         }
 
         private static EditorAssetInfo getTreeViewItem( string path, int depth ) {
-            return new EditorAssetInfo( Path.GetFileNameWithoutExtension( path ), depth, ++idCounter );
+            return new EditorAssetInfo( Path.GetFileNameWithoutExtension( path ), depth, idCounter++ );
         }
 
     }

@@ -153,6 +153,9 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     case SortOption.FileName:
                         orderedQuery = orderedQuery.ThenBy( l => l.data.Name, ascending );
                         break;
+                    case SortOption.AssetBundleName:
+                        orderedQuery = orderedQuery.ThenBy( l => l.data.AssetBundleName, ascending );
+                        break;
                     case SortOption.AssetPath:
                         orderedQuery = orderedQuery.ThenBy( l => l.data.AssetPath, ascending );
                         break;
@@ -169,7 +172,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                         orderedQuery = orderedQuery.ThenBy( l => l.data.Date, ascending );
                         break;
                     case SortOption.UnityVersion:
-                        orderedQuery = orderedQuery.ThenBy( l => DateTime.Parse( l.data.UnityVersion ), ascending );
+                        orderedQuery = orderedQuery.ThenBy( l => l.data.UnityVersion, ascending );
                         break;
                 }
             }
@@ -185,6 +188,8 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                     return myTypes.Order( l => l.data.IsAvailable, ascending );
                 case SortOption.FileName:
                     return myTypes.Order( l => l.data.Name, ascending );
+                case SortOption.AssetBundleName:
+                    return myTypes.Order( l => l.data.AssetBundleName, ascending );
                 case SortOption.AssetPath:
                     return myTypes.Order( l => l.data.AssetPath, ascending );
                 case SortOption.Extension:
@@ -323,7 +328,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
             {
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent(EditorGUIUtility.FindTexture( "FilterByType" ), "AssetType"),
+                    headerContent = new GUIContent(EditorGUIUtility.FindTexture( "FilterByType" ), "Type of the asset."),
                     contextMenuText = "",
                     headerTextAlignment = TextAlignment.Center,
                     canSort = false,
@@ -336,7 +341,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent(EditorGUIUtility.FindTexture( "Checkmark" ), "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "),
+                    headerContent = new GUIContent(EditorGUIUtility.FindTexture( "Checkmark" ), "Check if filename is available. "),
                     contextMenuText = "",
                     headerTextAlignment = TextAlignment.Center,
                     sortedAscending = true,
@@ -360,7 +365,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("AssetBundle", "Maecenas congue non tortor eget vulputate."),
+                    headerContent = new GUIContent("AssetBundle"),
                     headerTextAlignment = TextAlignment.Left,
                     sortedAscending = true,
                     sortingArrowAlignment = TextAlignment.Right,
@@ -371,7 +376,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("AssetPath", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus."),
+                    headerContent = new GUIContent("AssetPath"),
                     headerTextAlignment = TextAlignment.Left,
                     sortedAscending = true,
                     sortingArrowAlignment = TextAlignment.Right,
@@ -381,7 +386,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent( "Extension", "In sed porta ante. Nunc et nulla mi."),
+                    headerContent = new GUIContent( "Extension"),
                     headerTextAlignment = TextAlignment.Left,
                     sortedAscending = true,
                     sortingArrowAlignment = TextAlignment.Right,
@@ -392,7 +397,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("Version", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus."),
+                    headerContent = new GUIContent("Version"),
                     headerTextAlignment = TextAlignment.Left,
                     sortedAscending = true,
                     sortingArrowAlignment = TextAlignment.Left,
@@ -402,7 +407,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("Size", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus."),
+                    headerContent = new GUIContent("Size"),
                     headerTextAlignment = TextAlignment.Left,
                     sortedAscending = true,
                     sortingArrowAlignment = TextAlignment.Left,
@@ -412,7 +417,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("Date", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus."),
+                    headerContent = new GUIContent("Date"),
                     headerTextAlignment = TextAlignment.Right,
                     sortedAscending = true,
                     sortingArrowAlignment = TextAlignment.Left,
@@ -422,7 +427,7 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
                 },
                 new MultiColumnHeaderState.Column
                 {
-                    headerContent = new GUIContent("UnityVersion", "Nam at tellus ultricies ligula vehicula ornare sit amet quis metus."),
+                    headerContent = new GUIContent("UnityVersion"),
                     headerTextAlignment = TextAlignment.Right,
                     sortedAscending = true,
                     sortingArrowAlignment = TextAlignment.Left,

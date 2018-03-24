@@ -60,17 +60,40 @@ namespace charcolle.Utility.EasyAssetBundle.v1 {
         /// </summary>
         public Dictionary<string, Hash128> Hash = new Dictionary<string, Hash128>();
 
+        /// <summary>
+        /// Editor Only
+        /// </summary>
         public bool IsBuild;
+        /// <summary>
+        /// Editor Only
+        /// </summary>
         public bool IsAvailable;
+        /// <summary>
+        /// Editor Only
+        /// </summary>
         public bool IsSelected;
+        /// <summary>
+        /// Editor Only
+        /// </summary>
         public bool IsDirectoryLabel;
+        /// <summary>
+        /// Editor Only
+        /// </summary>
         public Texture2D Texture;
+        /// <summary>
+        /// Editor Only
+        /// </summary>
         public int OldAssetVersion;
+        /// <summary>
+        /// Editor Only
+        /// </summary>
+        public string OldUnityVersion;
 
         public EditorAssetInfo( string name, int depth, int id ) : base( name, depth, id ) {
-            Version = 1;
+            Version         = 1;
             OldAssetVersion = 0;
-            UnityVersion = Application.unityVersion;
+            UnityVersion    = Application.unityVersion;
+            OldUnityVersion = Application.unityVersion;
         }
 
         public EditorAssetInfo( EditorAssetInfo copy ) {
